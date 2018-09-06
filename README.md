@@ -1,8 +1,8 @@
 # Simple implementation of Dense Visual Odometry with RGB-D camera
 ![demo](https://user-images.githubusercontent.com/15071493/45149269-1c58e000-b204-11e8-93a9-29b227416191.gif)  
 This ROS package provides simple implementation of Dense Visual Odometry with RGB-D camera (https://vision.in.tum.de/_media/spezial/bib/kerl13icra.pdf&hl=ja&sa=X&scisig=AAGBfm147Qu9xs7R6FGEiy3zbmEXLYgvbw&nossl=1&oi=scholarr).  
+Dataset is available from https://vision.in.tum.de/data/datasets/rgbd-dataset/download# .  
 This implementation is just for dense tracking. Robust weighting is not implemented yet.   
-Dataset is available from https://vision.in.tum.de/data/datasets/rgbd-dataset/download# .
 
 # Dependency
 Ubuntu 14.04 LTS or 16.04  
