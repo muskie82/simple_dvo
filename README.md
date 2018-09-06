@@ -1,5 +1,5 @@
 # Simple implementation of Dense Visual Odometry 
-This ROS package provides simple implementation of Dense Visual Odometry with RGB-D camera (https://vision.in.tum.de/_media/spezial/bib/kerl13icra.pdf&hl=ja&sa=X&scisig=AAGBfm147Qu9xs7R6FGEiy3zbmEXLYgvbw&nossl=1&oi=scholarr).
+This ROS package provides simple implementation of Dense Visual Odometry with RGB-D camera (https://vision.in.tum.de/_media/spezial/bib/kerl13icra.pdf&hl=ja&sa=X&scisig=AAGBfm147Qu9xs7R6FGEiy3zbmEXLYgvbw&nossl=1&oi=scholarr).  
 This implementation is just for dense tracking. Robust weighting is not implemented yet.  
 
 # Dependency
