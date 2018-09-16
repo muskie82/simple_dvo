@@ -15,7 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
 
 FIND_PACKAGE(Eigen REQUIRED)
 INCLUDE_DIRECTORIES(${EIGEN_INCLUDE_DIR}  ${catkin_INCLUDE_DIRS})
-include_directories(include/Sophus)
+include_directories(include/)
+include_directories(ThirdParty/Sophus)
 
 find_package(PCL 1.7 REQUIRED COMPONENTS visualization)
 include_directories(${PCL_INCLUDE_DIRS})
