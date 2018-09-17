@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 FIND_PACKAGE(Eigen REQUIRED)
 INCLUDE_DIRECTORIES(${EIGEN_INCLUDE_DIR}  ${catkin_INCLUDE_DIRS})
-include_directories(include/)
+include_directories(include)
 include_directories(ThirdParty/Sophus)
 
 find_package(PCL 1.7 REQUIRED COMPONENTS visualization)
@@ -33,7 +33,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(main src/main.cpp src/image_alignment.h src/image_alignment.cpp src/util.h src/util.cpp src/dvo_class.h)
+add_executable(main src/main.cpp include/image_alignment.h src/image_alignment.cpp include/util.h src/util.cpp include/dvo_class.h)
 
 
 target_link_libraries(main
