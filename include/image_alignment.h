@@ -33,6 +33,10 @@ private:
     cv::Mat depth_cur_Pyramid[num_pyramid];
     Eigen::Matrix3f k_Pyramid[num_pyramid];
 
+    //Robust weight estimation
+    static constexpr float INITIAL_SIGMA = 5.0f;
+    static constexpr float DEFAULT_DOF = 5.0f;
+
 public:
 
     /**
@@ -65,6 +69,11 @@ public:
      * @brief Calculate Jacobian for minimizing least square error.
      */
     Eigen::MatrixXf calcJacobian(const Eigen::VectorXf &xi, const int level);
+
+    /**
+     * @brief Compute robust weights from residuals.
+     */
+    void weighting(Eigen::VectorXf &residuals, Eigen::VectorXf &weights);
 
     /**
      * @brief Execute GaussNewton optimzation and find the optimam rotation and translation.

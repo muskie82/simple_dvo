@@ -276,6 +276,37 @@ Eigen::MatrixXf DirectImageAlignment::calcJacobian(const Eigen::VectorXf &xi, co
     return J;
 }
 
+void  DirectImageAlignment::weighting(Eigen::VectorXf &residuals, Eigen::VectorXf &weights) {
+    int n = residuals.size();
+    float lambda_init = 1.0f / (INITIAL_SIGMA * INITIAL_SIGMA);
+    float lambda = lambda_init;
+    float num = 0.0;
+    float dof = DEFAULT_DOF;
+    weights = Eigen::VectorXf::Ones(n);
+    int itr = 0;
+    do {
+        itr++;
+        lambda_init = lambda;
+        lambda = 0.0f;
+        num = 0.0f;
+        for(int i = 0; i < n; ++i) {
+            float data = residuals(i);
+
+            if(std::isfinite(data)) {
+                num += 1.0f;
+                lambda += data * data * ( (dof + 1.0f) / (dof + lambda_init * data * data) );
+            }
+        }
+        lambda /= num;
+        lambda = 1.0f / lambda;
+    } while(std::abs(lambda - lambda_init) > 1e-3);
+
+    for(int i=0; i<n; i++){
+        float data = residuals(i);
+        weights(i) = ( (dof + 1.0f) / (dof + lambda * data * data) );
+    }
+}
+
 void DirectImageAlignment::doGaussNewton(Eigen::Matrix3f& rot, Eigen::Vector3f& t){
 
     Eigen::VectorXf xi, xi_prev;
@@ -290,8 +321,18 @@ void DirectImageAlignment::doGaussNewton(Eigen::Matrix3f& rot, Eigen::Vector3f& 
         for (int itr = 0; itr < num_GNiterations; itr++) {
             // compute residuals and Jacobian
             Eigen::VectorXf residuals = calcRes(xi, level);
+            Eigen::VectorXf weights;
+
+            weighting(residuals, weights);
+            residuals = residuals.cwiseProduct(weights);
+
             Eigen::MatrixXf J = calcJacobian(xi, level);
+            // compute weighted Jacobian
+            for (int i = 0; i < residuals.size(); ++i)
+                for (int j = 0; j < J.cols(); ++j)
+                    J(i, j) = J(i, j) * weights[i];
             Eigen::MatrixXf Jt = J.transpose();
+
             float error = residuals.transpose()*residuals;
 
             // compute update step.
